@@ -2,7 +2,6 @@ package com.magallanes.photoviewer.data.remote.dto.get_photo_by_id
 
 
 import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetail
-import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetailSize
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -28,7 +27,7 @@ data class PhotoDetailDto(
     @Json(name = "alt")
     val alt: String,
     @Json(name = "src")
-    val photoDetailSize: PhotoDetailSize,
+    val photoDetailSize: PhotoDetailSizeDto,
     @Json(name = "liked")
     val liked: Boolean
 )
@@ -43,6 +42,6 @@ fun PhotoDetailDto.toPhotoDetail(): PhotoDetail {
         photographer_url = photographer_url,
         photographer_id = photographer_id,
         alt = alt,
-        photoDetailSize = photoDetailSize
+        photoDetailSize = photoDetailSize.toPhotoDetailSize()
     )
 }
