@@ -20,6 +20,14 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        // Load environment variables from app.properties file
+        project.ext.envConfigFile = rootProject.file("app.properties")
+        def appProperties = new Properties()
+        appProperties.load(new FileInputStream(project.ext.envConfigFile))
+
+        // Set environment variables as buildConfigField
+        buildConfigField("String", "PEXELS_API_KEY", appProperties.getProperty("PEXELS_API_KEY"))
     }
 
     buildTypes {
