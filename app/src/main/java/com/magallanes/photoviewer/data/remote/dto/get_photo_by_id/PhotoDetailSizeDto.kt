@@ -1,11 +1,12 @@
-package com.magallanes.photoviewer.data.remote.dto.getSearchPhotos
+package com.magallanes.photoviewer.data.remote.dto.get_photo_by_id
 
-import com.magallanes.photoviewer.domain.model.getSearchPhotos.PhotoSize
+
+import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetailSize
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class PhotoSizeDto(
+data class PhotoDetailSizeDto(
     @Json(name = "landscape")
     val landscape: String,
     @Json(name = "large")
@@ -24,8 +25,8 @@ data class PhotoSizeDto(
     val tiny: String
 )
 
-fun PhotoSizeDto.toPhotoSize(): PhotoSize {
-    return PhotoSize(
+fun PhotoDetailSizeDto.toPhotoDetailSize(): PhotoDetailSize {
+    return PhotoDetailSize(
         landscape = landscape,
         large = large,
         large2x = large2x,

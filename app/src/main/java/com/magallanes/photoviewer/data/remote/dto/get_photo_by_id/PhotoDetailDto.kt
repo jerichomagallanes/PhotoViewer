@@ -1,12 +1,14 @@
-package com.magallanes.photoviewer.data.remote.dto.getSearchPhotos
+package com.magallanes.photoviewer.data.remote.dto.get_photo_by_id
 
-import com.magallanes.photoviewer.domain.model.getSearchPhotos.Photo
-import com.magallanes.photoviewer.domain.model.getSearchPhotos.PhotoSize
+
+import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetail
+import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetailSize
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+
 @JsonClass(generateAdapter = true)
-data class PhotoDto(
+data class PhotoDetailDto(
     @Json(name = "id")
     val id: Int,
     @Json(name = "width")
@@ -26,18 +28,21 @@ data class PhotoDto(
     @Json(name = "alt")
     val alt: String,
     @Json(name = "src")
-    val photoSize: PhotoSize,
+    val photoDetailSize: PhotoDetailSize,
     @Json(name = "liked")
     val liked: Boolean
 )
 
-fun PhotoDto.toPhoto(): Photo {
-    return Photo(
+fun PhotoDetailDto.toPhotoDetail(): PhotoDetail {
+    return PhotoDetail(
         id = id,
         width = width,
         height = height,
         url = url,
         photographer = photographer,
-        photoSize = photoSize
+        photographer_url = photographer_url,
+        photographer_id = photographer_id,
+        alt = alt,
+        photoDetailSize = photoDetailSize
     )
 }

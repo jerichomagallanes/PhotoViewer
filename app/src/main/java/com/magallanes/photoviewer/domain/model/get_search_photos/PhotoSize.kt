@@ -1,4 +1,4 @@
-package com.magallanes.photoviewer.domain.model.getSearchPhotos
+package com.magallanes.photoviewer.domain.model.get_search_photos
 
 data class PhotoSize(
     val landscape: String,

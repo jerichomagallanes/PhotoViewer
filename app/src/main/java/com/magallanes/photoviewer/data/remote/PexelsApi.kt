@@ -1,7 +1,7 @@
 package com.magallanes.photoviewer.data.remote
 
-import com.magallanes.photoviewer.data.remote.dto.getPhotoById.PhotoDetailDto
-import com.magallanes.photoviewer.data.remote.dto.getSearchPhotos.SearchPhotosDto
+import com.magallanes.photoviewer.data.remote.dto.get_photo_by_id.PhotoDetailDto
+import com.magallanes.photoviewer.data.remote.dto.get_search_photos.SearchPhotosDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

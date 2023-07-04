@@ -1,4 +1,4 @@
-package com.magallanes.photoviewer.domain.model.getPhotoById
+package com.magallanes.photoviewer.domain.model.get_photo_by_id
 
 data class PhotoDetailSize(
     val landscape: String,

@@ -1,6 +1,6 @@
-package com.magallanes.photoviewer.data.remote.dto.getSearchPhotos
+package com.magallanes.photoviewer.data.remote.dto.get_search_photos
 
-import com.magallanes.photoviewer.domain.model.getSearchPhotos.SearchPhotos
+import com.magallanes.photoviewer.domain.model.get_search_photos.SearchPhotos
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -20,7 +20,7 @@ data class SearchPhotosDto(
 
 fun SearchPhotosDto.toSearchPhotos(): SearchPhotos {
     return SearchPhotos(
-        photos = photos,
+        photos = photos.map { it.toPhoto() },
         total_results = total_results
     )
 }
