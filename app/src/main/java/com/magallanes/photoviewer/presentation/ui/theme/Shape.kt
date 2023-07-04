@@ -1,4 +1,4 @@
-package com.magallanes.photoviewer.ui.theme
+package com.magallanes.photoviewer.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

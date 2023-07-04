@@ -1,4 +1,4 @@
-package com.magallanes.photoviewer
+package com.magallanes.photoviewer.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.magallanes.photoviewer.ui.theme.PhotoViewerTheme
+import com.magallanes.photoviewer.presentation.ui.theme.PhotoViewerTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

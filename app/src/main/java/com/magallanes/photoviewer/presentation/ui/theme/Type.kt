@@ -1,4 +1,4 @@
-package com.magallanes.photoviewer.ui.theme
+package com.magallanes.photoviewer.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
