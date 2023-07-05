@@ -6,8 +6,8 @@ data class PhotoDetail(
     val height: Int,
     val url: String,
     val photographer: String,
-    val photographer_url: String,
-    val photographer_id: Int,
+    val photographerUrl: String,
+    val photographerId: Int,
     val alt: String,
     val photoDetailSize: PhotoDetailSize
 )

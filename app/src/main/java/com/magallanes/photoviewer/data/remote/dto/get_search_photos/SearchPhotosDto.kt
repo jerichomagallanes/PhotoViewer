@@ -7,20 +7,20 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class SearchPhotosDto(
     @Json(name = "next_page")
-    val next_page: String,
+    val nextPage: String,
     @Json(name = "page")
     val page: Int,
     @Json(name = "per_page")
-    val per_page: Int,
+    val perPage: Int,
     @Json(name = "photos")
     val photos: List<PhotoDto>,
     @Json(name = "total_results")
-    val total_results: Int
+    val totalResults: Int
 )
 
 fun SearchPhotosDto.toSearchPhotos(): SearchPhotos {
     return SearchPhotos(
         photos = photos.map { it.toPhoto() },
-        total_results = total_results
+        totalResults = totalResults
     )
 }

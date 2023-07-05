@@ -17,9 +17,9 @@ data class PhotoDto(
     @Json(name = "photographer")
     val photographer: String,
     @Json(name = "photographer_url")
-    val photographer_url: String,
+    val photographerUrl: String,
     @Json(name = "photographer_id")
-    val photographer_id: Int,
+    val photographerId: Int,
     @Json(name = "avg_color")
     val avg_color: String,
     @Json(name = "alt")
@@ -37,6 +37,9 @@ fun PhotoDto.toPhoto(): Photo {
         height = height,
         url = url,
         photographer = photographer,
+        photographerUrl = photographerUrl,
+        photographerId = photographerId,
+        alt = alt,
         photoSize = photoSize.toPhotoSize()
     )
 }
