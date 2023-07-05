@@ -3,41 +3,41 @@ package com.magallanes.photoviewer.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.magallanes.photoviewer.presentation.photo_detail.PhotoDetailScreen
+import com.magallanes.photoviewer.presentation.photo_list.PhotoListScreen
 import com.magallanes.photoviewer.presentation.ui.theme.PhotoViewerTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PhotoViewerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
+            PhotoViewerTheme() {
+                Surface(color = MaterialTheme.colors.background) {
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.PhotoListScreen.route
+                    ) {
+                        composable(
+                            route = Screen.PhotoListScreen.route
+                        ) {
+                            PhotoListScreen(navController)
+                        }
+                        composable(
+                            route = Screen.PhotoDetailScreen.route + "/{id}"
+                        ) {
+                            PhotoDetailScreen()
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PhotoViewerTheme {
-        Greeting("Android")
     }
 }

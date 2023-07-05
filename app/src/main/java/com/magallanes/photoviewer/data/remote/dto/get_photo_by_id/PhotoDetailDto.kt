@@ -27,7 +27,7 @@ data class PhotoDetailDto(
     @Json(name = "alt")
     val alt: String,
     @Json(name = "src")
-    val photoDetailSize: PhotoDetailSizeDto,
+    val photoDetailSrc: PhotoDetailSrcDto,
     @Json(name = "liked")
     val liked: Boolean
 )
@@ -42,6 +42,6 @@ fun PhotoDetailDto.toPhotoDetail(): PhotoDetail {
         photographerUrl = photographerUrl,
         photographerId = photographerId,
         alt = alt,
-        photoDetailSize = photoDetailSize.toPhotoDetailSize()
+        photoDetailSrc = photoDetailSrc.toPhotoDetailSrc()
     )
 }

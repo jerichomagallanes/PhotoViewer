@@ -5,6 +5,7 @@ import com.magallanes.photoviewer.common.Constants
 import com.magallanes.photoviewer.data.remote.PexelsApi
 import com.magallanes.photoviewer.data.repository.PhotoRepositoryImpl
 import com.magallanes.photoviewer.domain.repository.PhotoRepository
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,9 +38,11 @@ object AppModule {
             }
             .build()
 
+        val moshi = Moshi.Builder().build()
+
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
             .create(PexelsApi::class.java)

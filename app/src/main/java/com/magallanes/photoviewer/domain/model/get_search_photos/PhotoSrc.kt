@@ -1,6 +1,6 @@
-package com.magallanes.photoviewer.domain.model.get_photo_by_id
+package com.magallanes.photoviewer.domain.model.get_search_photos
 
-data class PhotoDetailSize(
+data class PhotoSrc(
     val landscape: String,
     val large: String,
     val large2x: String,

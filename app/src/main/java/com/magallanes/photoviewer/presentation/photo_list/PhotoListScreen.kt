@@ -31,7 +31,7 @@ fun PhotoListScreen (
                 PhotoItem(
                     photo = photo,
                     onItemClick = {
-                        navController.navigate(Screen.PhotoListScreen.route + "/${photo.id}")
+                        navController.navigate(Screen.PhotoDetailScreen.route + "/${photo.id}")
                     }
                 )
             }

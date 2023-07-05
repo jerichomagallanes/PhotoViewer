@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
-import com.magallanes.photoviewer.domain.model.get_search_photos.PhotoSize
+import com.magallanes.photoviewer.domain.model.get_search_photos.PhotoSrc
 import com.magallanes.photoviewer.presentation.ui.theme.PhotoViewerTheme
 import androidx.compose.ui.platform.LocalContext
 
@@ -40,7 +40,7 @@ fun PhotoItem(
                     .aspectRatio(1.5f)
             ) {
                 AsyncImage(
-                    model = photo.photoSize.small,
+                    model = photo.photoSrc.large2x,
                     contentDescription = photo.alt,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -88,7 +88,7 @@ fun PhotoItemPreview() {
                 photographerUrl = "https://www.pexels.com/@divinetechygirl",
                 photographerId = 473730,
                 alt = "Woman Smiling and Holding Teal Book",
-                photoSize = PhotoSize(
+                photoSrc = PhotoSrc(
                     landscape = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
                     large = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
                     large2x = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
