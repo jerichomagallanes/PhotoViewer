@@ -20,26 +20,27 @@ class PhotoListViewModel @Inject constructor(
     private val _state = mutableStateOf(PhotoListState())
     val state: State<PhotoListState> = _state
 
-    init {
-        getSearchPhotos()
-    }
-
-    private fun getSearchPhotos() {
-        getSearchPhotosUseCase(query = "People").onEach { result ->
-            when(result) {
+    fun getSearchPhotos(query: String) {
+        getSearchPhotosUseCase(query = query).onEach { result ->
+            when (result) {
                 is Resource.Success -> {
                     _state.value = PhotoListState(
                         photos = result.data?.photos ?: emptyList(),
-                        totalResults = result.data?.totalResults ?: 0
+                        totalResults = result.data?.totalResults ?: 0,
+                        query = query
                     )
                 }
                 is Resource.Error -> {
                     _state.value = PhotoListState(
-                        error = result.message ?: "An unexpected error occurred"
+                        error = result.message ?: "An unexpected error occurred",
+                        query = query
                     )
                 }
                 is Resource.Loading -> {
-                    _state.value = PhotoListState(isLoading = true)
+                    _state.value = PhotoListState(
+                        isLoading = true,
+                        query = query
+                    )
                 }
             }
         }.launchIn(viewModelScope)

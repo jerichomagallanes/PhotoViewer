@@ -4,6 +4,7 @@ import com.magallanes.photoviewer.common.Resource
 import com.magallanes.photoviewer.data.remote.dto.get_search_photos.toSearchPhotos
 import com.magallanes.photoviewer.domain.model.get_search_photos.SearchPhotos
 import com.magallanes.photoviewer.domain.repository.PhotoRepository
+import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -22,6 +23,8 @@ class GetSearchPhotosUseCase @Inject constructor(
             emit(Resource.Error<SearchPhotos>(e.localizedMessage ?: "An unexpected error occurred"))
         } catch(e: IOException) {
             emit(Resource.Error<SearchPhotos>("Couldn't reach server. Check your internet connection."))
+        } catch (e: JsonDataException) {
+            emit(Resource.Error<SearchPhotos>("Invalid response data."))
         }
     }
 }
