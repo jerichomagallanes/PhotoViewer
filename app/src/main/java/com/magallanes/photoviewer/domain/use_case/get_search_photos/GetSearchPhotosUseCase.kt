@@ -1,14 +1,11 @@
 package com.magallanes.photoviewer.domain.use_case.get_search_photos
 
+import com.magallanes.photoviewer.common.CustomException
 import com.magallanes.photoviewer.common.Resource
-import com.magallanes.photoviewer.data.remote.dto.get_search_photos.toSearchPhotos
 import com.magallanes.photoviewer.domain.model.get_search_photos.SearchPhotos
 import com.magallanes.photoviewer.domain.repository.PhotoRepository
-import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 class GetSearchPhotosUseCase @Inject constructor(
@@ -17,14 +14,10 @@ class GetSearchPhotosUseCase @Inject constructor(
     operator fun invoke(query: String): Flow<Resource<SearchPhotos>> = flow {
         try {
             emit(Resource.Loading<SearchPhotos>())
-            val searchPhotos = repository.getSearchPhotos(query = query).toSearchPhotos()
+            val searchPhotos = repository.getSearchPhotos(query = query)
             emit(Resource.Success<SearchPhotos>(searchPhotos))
-        } catch(e: HttpException) {
-            emit(Resource.Error<SearchPhotos>(e.localizedMessage ?: "An unexpected error occurred"))
-        } catch(e: IOException) {
-            emit(Resource.Error<SearchPhotos>("Couldn't reach server. Check your internet connection."))
-        } catch (e: JsonDataException) {
-            emit(Resource.Error<SearchPhotos>("Invalid response data."))
+        } catch (e: CustomException) {
+            emit(Resource.Error<SearchPhotos>(e.message ?: "An unexpected error occurred"))
         }
     }
 }
