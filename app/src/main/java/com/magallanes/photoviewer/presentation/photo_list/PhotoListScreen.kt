@@ -32,6 +32,8 @@ fun PhotoListScreen(
     viewModel: PhotoListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    val likedPhotos by state.likedPhotos.collectAsState(emptyList())
+    val isLikedMap = remember { mutableStateMapOf<Int, Boolean>() }
     val searchQuery = remember { mutableStateOf("") }
     var textFieldFocus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -49,11 +51,23 @@ fun PhotoListScreen(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(0.dp)
         ) {
+
             items(state.photos) { photo ->
+                val isLiked = isLikedMap[photo.id] ?: likedPhotos.any { it.id == photo.id }
+
                 PhotoItem(
                     photo = photo,
                     onItemClick = {
                         navController.navigate(Screen.PhotoDetailScreen.route + "/${photo.id}")
+                    },
+                    isLiked = isLiked,
+                    onLikeClick = { liked ->
+                        if (liked) {
+                            viewModel.likePhoto(photo)
+                        } else {
+                            viewModel.unlikePhoto(photo)
+                        }
+                        isLikedMap[photo.id] = liked
                     }
                 )
             }

@@ -3,14 +3,14 @@ package com.magallanes.photoviewer.presentation.photo_list.components
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,11 +21,15 @@ import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
 import com.magallanes.photoviewer.domain.model.get_search_photos.PhotoSrc
 import com.magallanes.photoviewer.presentation.ui.theme.PhotoViewerTheme
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import com.magallanes.photoviewer.R
 
 @Composable
 fun PhotoItem(
     photo: Photo,
     onItemClick: (Photo) -> Unit,
+    isLiked: Boolean,
+    onLikeClick: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -44,29 +48,36 @@ fun PhotoItem(
                     contentDescription = photo.alt,
                     modifier = Modifier.fillMaxSize()
                 )
-                Box(
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(
+                        id = if (isLiked) R.drawable.ic_heart_filled else R.drawable.ic_heart_outline
+                    ),
+                    contentDescription = if (isLiked) "Liked" else "Not Liked",
+                    tint = if (isLiked) Color.Red else Color.Gray,
                     modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(end = 16.dp, bottom = 16.dp)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        AsyncImage(
-                            model = photo.photographerUrl,
-                            contentDescription = photo.photographerId.toString(),
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clip(CircleShape)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = photo.photographer,
-                            fontSize = 8.sp,
-                            fontStyle = FontStyle.Italic,
-                            textAlign = TextAlign.End,
-                            style = MaterialTheme.typography.body2,
-                        )
-                    }
-                }
+                        .size(24.dp)
+                        .clickable { onLikeClick(!isLiked) }
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = photo.photographer,
+                    fontSize = 8.sp,
+                    fontStyle = FontStyle.Italic,
+                    textAlign = TextAlign.End,
+                    style = MaterialTheme.typography.body2,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .wrapContentWidth(align = Alignment.End)
+                )
             }
         }
     }
@@ -102,6 +113,11 @@ fun PhotoItemPreview() {
             onItemClick = { clickedPhoto ->
                 // Handle item click here, e.g., show a toast message
                 Toast.makeText(context, "Item clicked: ${clickedPhoto.id}", Toast.LENGTH_SHORT).show()
+            },
+            isLiked = true,
+            onLikeClick = {
+                // Handle item click here, e.g., show a toast message
+                Toast.makeText(context, "Item clicked", Toast.LENGTH_SHORT).show()
             },
             modifier = Modifier.fillMaxWidth()
         )

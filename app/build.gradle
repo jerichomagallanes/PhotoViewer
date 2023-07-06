@@ -75,6 +75,7 @@ ext {
     retrofit_version = '2.9.0'
     logging_interceptor_version = '5.0.0-alpha.3'
     moshi_version = '1.14.0'
+    gson_version = '2.9.0'
     room_version = '2.5.2'
 }
 
@@ -118,6 +119,9 @@ dependencies {
     implementation("com.squareup.moshi:moshi:${moshi_version}")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:${moshi_version}")
     implementation("com.squareup.retrofit2:converter-moshi:${retrofit_version}")
+
+    // Gson
+    implementation("com.google.code.gson:gson:${gson_version}")
 
     // Room
     implementation "androidx.room:room-ktx:${room_version}"

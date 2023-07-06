@@ -6,15 +6,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.magallanes.photoviewer.common.Resource
+import com.magallanes.photoviewer.data.repository.PhotoDatabaseRepository
+import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
-    private val getSearchPhotosUseCase: GetSearchPhotosUseCase
+    private val getSearchPhotosUseCase: GetSearchPhotosUseCase,
+    private val photoListDatabaseRepository: PhotoDatabaseRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf(PhotoListState())
@@ -27,7 +31,8 @@ class PhotoListViewModel @Inject constructor(
                     _state.value = PhotoListState(
                         photos = result.data?.photos ?: emptyList(),
                         totalResults = result.data?.totalResults ?: 0,
-                        query = query
+                        query = query,
+                        likedPhotos = photoListDatabaseRepository.getAllLikedPhotos()
                     )
                 }
                 is Resource.Error -> {
@@ -45,4 +50,17 @@ class PhotoListViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    fun likePhoto(photo: Photo) {
+        viewModelScope.launch {
+            photoListDatabaseRepository.insertLikedPhoto(photo)
+        }
+    }
+
+    fun unlikePhoto(photo: Photo) {
+        viewModelScope.launch {
+            photoListDatabaseRepository.deleteLikedPhoto(photo)
+        }
+    }
+
 }
