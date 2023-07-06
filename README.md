@@ -2,12 +2,12 @@
 
 This Android application allows users to search for and browse photos. It is developed using Kotlin and follows the MVVM architecture pattern with Clean Architecture principles, including the UseCases pattern. The app utilizes the Pexels API for retrieving photos.
 
-![Photo Viewer Preview](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/8dd8ff80-1dc5-4bda-852e-e0b92c01272c)
-
+![Photo Viewer Preview](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/2ab4612e-4b89-4d89-8ca0-dbfc44c0207e)
 
 ## 📋 Features
 
 - **Photo Search Screen**: Users can enter search keywords to view a list of photos with photographer names.
+- **Like/Unlike Photos**: Users can like/unlike a photo.
 - **Photo Display Screen**: Displays selected photos in full-screen mode.
 
 ## 📚 Libraries Used
@@ -49,10 +49,9 @@ This Android application allows users to search for and browse photos. It is dev
 
 ## Additional Features (Work in Progress)
 
-- **Like and Save Photos**: Users will be able to like a photo, and the liked photo will be saved in a local database using the Room library.
 - **Liked Photos Screen**: This screen will display all the photos liked by the user, allowing them to view their saved photos.
 
-These features are currently under development and will be added in future updates.
+This feature is currently under development and will be added in future updates.
 
 ---
 
