@@ -16,12 +16,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.magallanes.photoviewer.R
 import com.magallanes.photoviewer.presentation.Screen
 import com.magallanes.photoviewer.presentation.photo_list.components.PhotoItem
 
@@ -51,7 +53,6 @@ fun PhotoListScreen(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(0.dp)
         ) {
-
             items(state.photos) { photo ->
                 val isLiked = isLikedMap[photo.id] ?: likedPhotos.any { it.id == photo.id }
 
@@ -80,31 +81,50 @@ fun PhotoListScreen(
             backgroundColor = Color.Transparent,
             elevation = 0.dp
         ) {
-            TextField(
-                value = searchQuery.value,
-                onValueChange = { searchQuery.value = it },
-                placeholder = { Text("Search") },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Search
-                ),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        viewModel.getSearchPhotos(query = searchQuery.value)
-                        keyboardController?.hide()
-                    }
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent)
-                    .focusRequester(focusRequester)
-                    .onFocusChanged {
-                        textFieldFocus = it.isFocused
-                        if (it.isFocused) {
-                            keyboardController?.show()
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TextField(
+                    value = searchQuery.value,
+                    onValueChange = { searchQuery.value = it },
+                    placeholder = { Text("Search") },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Search
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            viewModel.getSearchPhotos(query = searchQuery.value)
+                            keyboardController?.hide()
                         }
+                    ),
+                    modifier = Modifier
+                        .weight(1f)
+                        .background(color = Color.Transparent)
+                        .focusRequester(focusRequester)
+                        .onFocusChanged {
+                            textFieldFocus = it.isFocused
+                            if (it.isFocused) {
+                                keyboardController?.show()
+                            }
+                        }
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                IconButton(
+                    onClick = {
+                        navController.navigate(Screen.LikedPhotoListScreen.route)
                     }
-            )
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_heart_filled),
+                        contentDescription = "Favorites"
+                    )
+                }
+            }
         }
 
         if (state.error.isNotBlank()) {

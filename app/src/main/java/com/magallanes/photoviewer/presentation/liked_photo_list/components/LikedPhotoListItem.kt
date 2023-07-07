@@ -1,4 +1,4 @@
-package com.magallanes.photoviewer.presentation.photo_list.components
+package com.magallanes.photoviewer.presentation.liked_photo_list.components
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import com.magallanes.photoviewer.R
 
 @Composable
-fun PhotoItem(
+fun LikedPhotoItem(
     photo: Photo,
     onItemClick: (Photo) -> Unit,
     isLiked: Boolean,
@@ -65,6 +65,7 @@ fun PhotoItem(
                         tint = if (isLiked) Color.Red else Color.Gray
                     )
                 }
+
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = photo.photographer,
@@ -88,7 +89,7 @@ fun PhotoItemPreview() {
     val context = LocalContext.current // Access the context
 
     PhotoViewerTheme {
-        PhotoItem(
+        LikedPhotoItem(
             photo = Photo(
                 id = 1181424,
                 width = 4016,
