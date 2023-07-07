@@ -2,12 +2,15 @@
 
 This Android application allows users to search for and browse photos. It is developed using Kotlin and follows the MVVM architecture pattern with Clean Architecture principles, including the UseCases pattern. The app utilizes the Pexels API for retrieving photos.
 
-![Photo Viewer Preview](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/2ab4612e-4b89-4d89-8ca0-dbfc44c0207e)
+![Photo Viewer Preview 1](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/b4045c31-61ad-4149-8f38-7d370191a4b0)
+
+![Photo Viewer Preview 2](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/bd295e41-6821-41ee-ac1c-c093254b802f)
 
 ## 📋 Features
 
 - **Photo Search Screen**: Users can enter search keywords to view a list of photos with photographer names.
 - **Like/Unlike Photos**: Users can like/unlike a photo.
+- **Liked Photos Screen**: This screen will display all the photos liked by the user, allowing them to view their saved photos.
 - **Photo Display Screen**: Displays selected photos in full-screen mode.
 
 ## 📚 Libraries Used
@@ -26,6 +29,8 @@ This Android application allows users to search for and browse photos. It is dev
 - **Navigation Compose**: Navigation support library for Jetpack Compose apps.
 - **Lifecycle Compose**: Lifecycle-aware Jetpack Compose components.
 - **Material**: Material Design components and resources for Android.
+- **Room**: SQLite database library for data persistence.
+- **GSON**: JSON serialization/deserialization library.
 
 ## 🚀 Getting Started
 
@@ -44,14 +49,3 @@ This Android application allows users to search for and browse photos. It is dev
 2. Replace the placeholder API key with your actual key in the configuration file.
 
 3. Build and run the application on an Android device or emulator.
-
----
-
-## Additional Features (Work in Progress)
-
-- **Liked Photos Screen**: This screen will display all the photos liked by the user, allowing them to view their saved photos.
-
-This feature is currently under development and will be added in future updates.
-
----
-
