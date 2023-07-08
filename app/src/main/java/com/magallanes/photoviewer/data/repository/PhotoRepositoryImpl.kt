@@ -29,8 +29,12 @@ class PhotoRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPhotoById(id: String): PhotoDetail {
+        if (id.isEmpty()) {
+            throw CustomException("Invalid photo ID")
+        }
+
         try {
-            val photoDetailDto = api.getPhotoById(id = id)
+            val photoDetailDto = api.getPhotoById(id)
             return photoDetailDto.toPhotoDetail() // Convert DTO to domain model
         } catch (e: HttpException) {
             throw CustomException("An unexpected error occurred: ${e.localizedMessage}")
