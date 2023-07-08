@@ -4,8 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.magallanes.photoviewer.data.repository.PhotoDatabaseRepository
 import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
+import com.magallanes.photoviewer.domain.repository.PhotoDatabaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch

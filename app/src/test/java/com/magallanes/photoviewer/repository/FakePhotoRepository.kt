@@ -1,4 +1,4 @@
-package com.magallanes.photoviewer
+package com.magallanes.photoviewer.repository
 
 import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetail
 import com.magallanes.photoviewer.domain.model.get_search_photos.SearchPhotos

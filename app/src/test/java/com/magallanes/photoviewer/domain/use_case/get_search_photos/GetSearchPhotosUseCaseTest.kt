@@ -1,6 +1,6 @@
 package com.magallanes.photoviewer.domain.use_case.get_search_photos
 
-import com.magallanes.photoviewer.FakePhotoRepository
+import com.magallanes.photoviewer.repository.FakePhotoRepository
 import com.magallanes.photoviewer.common.CustomException
 import com.magallanes.photoviewer.common.Resource
 import com.magallanes.photoviewer.domain.model.get_search_photos.SearchPhotos
