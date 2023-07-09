@@ -5,10 +5,10 @@ import com.magallanes.photoviewer.data.remote.dto.get_photo_by_id.PhotoDetailDto
 import com.magallanes.photoviewer.data.remote.dto.get_photo_by_id.toPhotoDetail
 import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetail
 
-object GetPhotoByIdMockResponse {
+object GetPhotoDetailMocker {
     private val gson = Gson()
 
-    fun getMockPhotoByIdMockResponse(): PhotoDetail {
+    fun createPhotoDetail(): PhotoDetail {
         val jsonString = """
             {
                 "id": 2064826,

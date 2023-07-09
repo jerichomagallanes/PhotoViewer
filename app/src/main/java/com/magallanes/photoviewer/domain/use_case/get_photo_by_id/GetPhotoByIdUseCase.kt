@@ -18,6 +18,8 @@ class GetPhotoByIdUseCase @Inject constructor(
             emit(Resource.Success<PhotoDetail>(photoDetail))
         } catch (e: CustomException) {
             emit(Resource.Error<PhotoDetail>(e.message ?: "An unexpected error occurred"))
+        } catch (e: Exception) {
+            emit(Resource.Error<PhotoDetail>(e.message ?: "An unexpected error occurred"))
         }
     }
 }

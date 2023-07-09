@@ -25,7 +25,7 @@ data class PhotoDto(
     @Json(name = "alt")
     val alt: String,
     @Json(name = "src")
-    val photoSrc: PhotoSrcDto,
+    val src: PhotoSrcDto,
     @Json(name = "liked")
     val liked: Boolean
 )
@@ -40,6 +40,6 @@ fun PhotoDto.toPhoto(): Photo {
         photographerUrl = photographerUrl,
         photographerId = photographerId,
         alt = alt,
-        photoSrc = photoSrc.toPhotoSrc()
+        photoSrc = src.toPhotoSrc()
     )
 }

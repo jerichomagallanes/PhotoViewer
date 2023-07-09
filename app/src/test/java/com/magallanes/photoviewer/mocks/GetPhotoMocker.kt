@@ -1,14 +1,14 @@
 package com.magallanes.photoviewer.mocks
 
 import com.google.gson.Gson
-import com.magallanes.photoviewer.data.remote.dto.get_photo_by_id.PhotoDetailDto
-import com.magallanes.photoviewer.data.remote.dto.get_photo_by_id.toPhotoDetail
-import com.magallanes.photoviewer.domain.model.get_photo_by_id.PhotoDetail
+import com.magallanes.photoviewer.data.remote.dto.get_search_photos.PhotoDto
+import com.magallanes.photoviewer.data.remote.dto.get_search_photos.toPhoto
+import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
 
-object GetPhotoByIdMockResponse {
+object GetPhotoMocker {
     private val gson = Gson()
 
-    fun getMockPhotoByIdMockResponse(): PhotoDetail {
+    fun createPhoto(): Photo {
         val jsonString = """
             {
                 "id": 2064826,
@@ -32,6 +32,6 @@ object GetPhotoByIdMockResponse {
             }
         """.trimIndent()
 
-        return gson.fromJson(jsonString, PhotoDetailDto::class.java).toPhotoDetail()
+        return gson.fromJson(jsonString, PhotoDto::class.java).toPhoto()
     }
 }

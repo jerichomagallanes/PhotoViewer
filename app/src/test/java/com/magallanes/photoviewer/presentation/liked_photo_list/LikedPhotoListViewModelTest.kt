@@ -1,19 +1,15 @@
 package com.magallanes.photoviewer.presentation.liked_photo_list
 
 import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
-import com.magallanes.photoviewer.domain.model.get_search_photos.PhotoSrc
+import com.magallanes.photoviewer.mocks.GetPhotoMocker
 import com.magallanes.photoviewer.repository.FakePhotoDatabaseRepository
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.setMain
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -23,10 +19,14 @@ import org.junit.Test
 class LikedPhotoListViewModelTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
+    private lateinit var photoListDatabaseRepository: FakePhotoDatabaseRepository
+    private lateinit var viewModel: LikedPhotoListViewModel
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
+        photoListDatabaseRepository = mockk(relaxed = true)
+        viewModel = LikedPhotoListViewModel(photoListDatabaseRepository)
     }
 
     @After
@@ -36,32 +36,8 @@ class LikedPhotoListViewModelTest {
     }
 
     @Test
-    fun `likePhoto should insert liked photo and refresh list`() = testDispatcher.runBlockingTest {
-        Dispatchers.setMain(testDispatcher)
-
-        val photoListDatabaseRepository = mockk<FakePhotoDatabaseRepository>(relaxed = true)
-        val viewModel = LikedPhotoListViewModel(photoListDatabaseRepository)
-
-        val photo = Photo(
-            id = 1181424,
-            width = 4016,
-            height = 6016,
-            url = "https://www.pexels.com/photo/woman-smiling-and-holding-teal-book-1181424/",
-            photographer = "Christina Morillo",
-            photographerUrl = "https://www.pexels.com/@divinetechygirl",
-            photographerId = 473730,
-            alt = "Woman Smiling and Holding Teal Book",
-            photoSrc = PhotoSrc(
-                landscape = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-                large = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-                large2x = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                medium = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=350",
-                original = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg",
-                portrait = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800",
-                small = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=130",
-                tiny = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280"
-            )
-        )
+    fun `likePhoto should insert liked photo and refresh list`() = runBlocking(testDispatcher) {
+        val photo = GetPhotoMocker.createPhoto()
         val likedPhotos = listOf(photo)
 
         coEvery {
@@ -87,32 +63,8 @@ class LikedPhotoListViewModelTest {
     }
 
     @Test
-    fun `unlikePhoto should delete liked photo and refresh list`() = testDispatcher.runBlockingTest {
-        Dispatchers.setMain(testDispatcher)
-
-        val photoListDatabaseRepository = mockk<FakePhotoDatabaseRepository>(relaxed = true)
-        val viewModel = LikedPhotoListViewModel(photoListDatabaseRepository)
-
-        val photo = Photo(
-            id = 1181424,
-            width = 4016,
-            height = 6016,
-            url = "https://www.pexels.com/photo/woman-smiling-and-holding-teal-book-1181424/",
-            photographer = "Christina Morillo",
-            photographerUrl = "https://www.pexels.com/@divinetechygirl",
-            photographerId = 473730,
-            alt = "Woman Smiling and Holding Teal Book",
-            photoSrc = PhotoSrc(
-                landscape = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
-                large = "https://images.pexels.com/photos/1250643/pexels-photo-1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-                large2x = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                medium = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=350",
-                original = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg",
-                portrait = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800",
-                small = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=130",
-                tiny = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280"
-            )
-        )
+    fun `unlikePhoto should delete liked photo and refresh list`() = runBlocking(testDispatcher) {
+        val photo = GetPhotoMocker.createPhoto()
         val likedPhotos = emptyList<Photo>()
 
         coEvery {

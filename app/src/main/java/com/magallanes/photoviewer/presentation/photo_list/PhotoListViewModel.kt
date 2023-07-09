@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.magallanes.photoviewer.common.Resource
-import com.magallanes.photoviewer.data.repository.PhotoDatabaseRepositoryImpl
 import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
+import com.magallanes.photoviewer.domain.repository.PhotoDatabaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
     private val getSearchPhotosUseCase: GetSearchPhotosUseCase,
-    private val photoListDatabaseRepository: PhotoDatabaseRepositoryImpl
+    private val photoListDatabaseRepository: PhotoDatabaseRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf(PhotoListState())

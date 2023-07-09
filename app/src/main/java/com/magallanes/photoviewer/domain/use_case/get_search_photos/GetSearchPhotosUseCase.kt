@@ -18,6 +18,8 @@ class GetSearchPhotosUseCase @Inject constructor(
             emit(Resource.Success<SearchPhotos>(searchPhotos))
         } catch (e: CustomException) {
             emit(Resource.Error<SearchPhotos>(e.message ?: "An unexpected error occurred"))
+        } catch (e: Exception) {
+            emit(Resource.Error<SearchPhotos>(e.message ?: "An unexpected error occurred"))
         }
     }
 }

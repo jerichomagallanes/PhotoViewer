@@ -28,7 +28,7 @@ class PhotoDetailViewModel @Inject constructor(
         }
     }
 
-    private fun getPhotoById(id: String) {
+    fun getPhotoById(id: String) {
         getPhotoByIdUseCase(id = id).onEach { result ->
             when(result) {
                 is Resource.Success -> {
@@ -47,5 +47,4 @@ class PhotoDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
 }

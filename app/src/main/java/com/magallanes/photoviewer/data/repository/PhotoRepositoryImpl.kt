@@ -18,7 +18,7 @@ class PhotoRepositoryImpl @Inject constructor(
     override suspend fun getSearchPhotos(query: String): SearchPhotos {
         try {
             val searchPhotosDto = api.getSearchPhotos(query = query)
-            return searchPhotosDto.toSearchPhotos() // Convert DTO to domain model
+            return searchPhotosDto.toSearchPhotos()
         } catch (e: HttpException) {
             throw CustomException("An unexpected error occurred: ${e.localizedMessage}")
         } catch (e: IOException) {
@@ -35,7 +35,7 @@ class PhotoRepositoryImpl @Inject constructor(
 
         try {
             val photoDetailDto = api.getPhotoById(id)
-            return photoDetailDto.toPhotoDetail() // Convert DTO to domain model
+            return photoDetailDto.toPhotoDetail()
         } catch (e: HttpException) {
             throw CustomException("An unexpected error occurred: ${e.localizedMessage}")
         } catch (e: IOException) {
