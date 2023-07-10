@@ -14,7 +14,7 @@ android {
         minSdk 24
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -54,7 +54,9 @@ android {
         def versionName = defaultConfig.versionName
         def flavorName = variant.flavorName.toUpperCase()
 
-        if (variant.name != 'prodRelease') {
+        if (variant.name == 'prodRelease') {
+            variant.mergedFlavor.manifestPlaceholders = [appName: "Photo Viewer"]
+        } else {
             variant.mergedFlavor.manifestPlaceholders = [appName: "Photo Viewer $versionName $flavorName"]
         }
     }
