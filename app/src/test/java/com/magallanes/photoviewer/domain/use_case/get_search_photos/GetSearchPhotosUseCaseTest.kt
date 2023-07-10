@@ -1,10 +1,10 @@
 package com.magallanes.photoviewer.domain.use_case.get_search_photos
 
-import com.magallanes.photoviewer.dev.data.repository.FakePhotoRepository
 import com.magallanes.photoviewer.common.CustomException
 import com.magallanes.photoviewer.common.Resource
 import com.magallanes.photoviewer.domain.model.get_search_photos.SearchPhotos
-import com.magallanes.photoviewer.dev.data.mocks.GetSearchPhotosMockResponse
+import com.magallanes.photoviewer.mocks.GetSearchPhotosMockResponse
+import com.magallanes.photoviewer.repository.FakePhotoRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
