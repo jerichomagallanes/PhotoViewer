@@ -5,10 +5,10 @@ import com.magallanes.photoviewer.common.Resource
 import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
 import com.magallanes.photoviewer.domain.model.get_search_photos.SearchPhotos
 import com.magallanes.photoviewer.domain.use_case.get_search_photos.GetSearchPhotosUseCase
-import com.magallanes.photoviewer.mocks.GetPhotoMocker
-import com.magallanes.photoviewer.mocks.GetSearchPhotosMockResponse
-import com.magallanes.photoviewer.repository.FakePhotoDatabaseRepository
-import com.magallanes.photoviewer.repository.FakePhotoRepository
+import com.magallanes.photoviewer.dev.data.mocks.GetPhotoMocker
+import com.magallanes.photoviewer.dev.data.mocks.GetSearchPhotosMockResponse
+import com.magallanes.photoviewer.dev.data.repository.FakePhotoDatabaseRepository
+import com.magallanes.photoviewer.dev.data.repository.FakePhotoRepository
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

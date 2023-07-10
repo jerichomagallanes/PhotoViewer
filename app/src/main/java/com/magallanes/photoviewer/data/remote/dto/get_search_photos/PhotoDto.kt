@@ -40,6 +40,6 @@ fun PhotoDto.toPhoto(): Photo {
         photographerUrl = photographerUrl,
         photographerId = photographerId,
         alt = alt,
-        photoSrc = src.toPhotoSrc()
+        src = src.toPhotoSrc()
     )
 }

@@ -35,7 +35,7 @@ fun PhotoDetailScreen(
                         .padding(15.dp)
                 ) {
                     AsyncImage(
-                        model = photoDetail.photoDetailSrc.large2x,
+                        model = photoDetail.src.large2x,
                         contentDescription = photoDetail.alt,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -69,7 +69,6 @@ fun PhotoDetailScreen(
         if (state.error.isNotBlank()) {
             Text(
                 text = state.error,
-                color = MaterialTheme.colors.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(Alignment.Center)

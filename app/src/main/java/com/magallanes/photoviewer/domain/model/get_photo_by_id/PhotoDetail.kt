@@ -9,5 +9,5 @@ data class PhotoDetail(
     val photographerUrl: String,
     val photographerId: Int,
     val alt: String,
-    val photoDetailSrc: PhotoDetailSrc
+    val src: PhotoDetailSrc
 )

@@ -42,6 +42,6 @@ fun PhotoDetailDto.toPhotoDetail(): PhotoDetail {
         photographerUrl = photographerUrl,
         photographerId = photographerId,
         alt = alt,
-        photoDetailSrc = src.toPhotoDetailSrc()
+        src = src.toPhotoDetailSrc()
     )
 }

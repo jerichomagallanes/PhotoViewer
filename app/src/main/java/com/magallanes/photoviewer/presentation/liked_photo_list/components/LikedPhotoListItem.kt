@@ -41,7 +41,7 @@ fun LikedPhotoItem(
                     .aspectRatio(1.5f)
             ) {
                 AsyncImage(
-                    model = photo.photoSrc.large2x,
+                    model = photo.src.large2x,
                     contentDescription = photo.alt,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -99,7 +99,7 @@ fun PhotoItemPreview() {
                 photographerUrl = "https://www.pexels.com/@divinetechygirl",
                 photographerId = 473730,
                 alt = "Woman Smiling and Holding Teal Book",
-                photoSrc = PhotoSrc(
+                src = PhotoSrc(
                     landscape = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
                     large = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
                     large2x = "https://images.pexels.com/photos/1250643/pexels-photo-1250643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",

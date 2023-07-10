@@ -1,9 +1,9 @@
 package com.magallanes.photoviewer.domain.use_case.get_photo_by_id
 
-import com.magallanes.photoviewer.repository.FakePhotoRepository
+import com.magallanes.photoviewer.dev.data.repository.FakePhotoRepository
 import com.magallanes.photoviewer.common.CustomException
 import com.magallanes.photoviewer.common.Resource
-import com.magallanes.photoviewer.mocks.GetPhotoByIdMockResponse
+import com.magallanes.photoviewer.dev.data.mocks.GetPhotoByIdMockResponse
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

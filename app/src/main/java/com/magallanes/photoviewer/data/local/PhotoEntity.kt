@@ -12,8 +12,8 @@ data class PhotoEntity(
     val height: Int,
     val url: String,
     val photographer: String,
-    val photographerUrl: String,
+    val photographerUrl: String?,
     val photographerId: Int,
     val alt: String,
-    val photoSrc: PhotoSrc
+    val src: PhotoSrc
 )

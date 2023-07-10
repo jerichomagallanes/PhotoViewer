@@ -30,12 +30,42 @@ android {
         buildConfigField("String", "PEXELS_API_KEY", appProperties.getProperty("PEXELS_API_KEY"))
     }
 
+    flavorDimensions "environment"
+
+    productFlavors {
+        dev {
+            dimension "environment"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+
+        sit {
+            dimension "environment"
+            applicationIdSuffix ".sit"
+            versionNameSuffix "-sit"
+        }
+
+        prod {
+            dimension "environment"
+        }
+    }
+
+    applicationVariants.all { variant ->
+        def versionName = defaultConfig.versionName
+        def flavorName = variant.flavorName.toUpperCase()
+
+        if (variant.name != 'prodRelease') {
+            variant.mergedFlavor.manifestPlaceholders = [appName: "Photo Viewer $versionName $flavorName"]
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

@@ -14,7 +14,7 @@ class PhotoMapper {
                 photographerUrl = photographerUrl,
                 photographerId = photographerId,
                 alt = alt,
-                photoSrc = photoSrc
+                src = src
             )
         }
     }
@@ -27,10 +27,10 @@ class PhotoMapper {
                 height = height,
                 url = url,
                 photographer = photographer,
-                photographerUrl = photographerUrl,
+                photographerUrl = photographerUrl ?: "",
                 photographerId = photographerId,
                 alt = alt,
-                photoSrc = photoSrc
+                src = src
             )
         }
     }
