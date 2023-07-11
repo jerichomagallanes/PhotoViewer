@@ -1,6 +1,6 @@
 package com.magallanes.photoviewer.presentation.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
+
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -29,7 +29,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun PhotoViewerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {

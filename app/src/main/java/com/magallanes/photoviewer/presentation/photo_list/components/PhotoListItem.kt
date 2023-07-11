@@ -62,7 +62,7 @@ fun PhotoItem(
                             id = if (isLiked) R.drawable.ic_heart_filled else R.drawable.ic_heart_outline
                         ),
                         contentDescription = if (isLiked) "Liked" else "Not Liked",
-                        tint = if (isLiked) Color.Red else Color.Gray
+                        tint = if (isLiked) MaterialTheme.colors.primary else Color.Gray
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
@@ -85,7 +85,7 @@ fun PhotoItem(
 @Preview
 @Composable
 fun PhotoItemPreview() {
-    val context = LocalContext.current // Access the context
+    val context = LocalContext.current
 
     PhotoViewerTheme {
         PhotoItem(

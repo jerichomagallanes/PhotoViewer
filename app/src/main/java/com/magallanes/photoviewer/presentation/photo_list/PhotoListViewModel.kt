@@ -1,10 +1,12 @@
 package com.magallanes.photoviewer.presentation.photo_list
 
+import android.content.SharedPreferences
 import com.magallanes.photoviewer.domain.use_case.get_search_photos.GetSearchPhotosUseCase
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.magallanes.photoviewer.common.Constants.DARK_MODE
 import com.magallanes.photoviewer.common.Resource
 import com.magallanes.photoviewer.domain.model.get_search_photos.Photo
 import com.magallanes.photoviewer.domain.repository.PhotoDatabaseRepository
@@ -18,11 +20,21 @@ import javax.inject.Inject
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
     private val getSearchPhotosUseCase: GetSearchPhotosUseCase,
-    private val photoListDatabaseRepository: PhotoDatabaseRepository
+    private val photoListDatabaseRepository: PhotoDatabaseRepository,
+    private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     private val _state = mutableStateOf(PhotoListState())
     val state: State<PhotoListState> = _state
+    var isDarkModeOn: Boolean
+        get() = sharedPreferences.getBoolean(DARK_MODE, false)
+        private set(value) {
+            sharedPreferences.edit().putBoolean(DARK_MODE, value).apply()
+        }
+    fun setDarkModePreference(enabled: Boolean) {
+        isDarkModeOn = enabled
+        sharedPreferences.edit().putBoolean(DARK_MODE, enabled).apply()
+    }
 
     fun getSearchPhotos(query: String) {
         getSearchPhotosUseCase(query = query).onEach { result ->

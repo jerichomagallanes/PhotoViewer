@@ -26,12 +26,15 @@ import androidx.navigation.NavController
 import com.magallanes.photoviewer.R
 import com.magallanes.photoviewer.presentation.Screen
 import com.magallanes.photoviewer.presentation.photo_list.components.PhotoItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PhotoListScreen(
     navController: NavController,
-    viewModel: PhotoListViewModel = hiltViewModel()
+    viewModel: PhotoListViewModel = hiltViewModel(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     val state = viewModel.state.value
     val likedPhotos by state.likedPhotos.collectAsState(emptyList())
@@ -41,102 +44,181 @@ fun PhotoListScreen(
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    val scaffoldState = rememberScaffoldState()
+    val isDrawerOpen = scaffoldState.drawerState.isOpen
+
+    val isDarkModeOn = remember { mutableStateOf(viewModel.isDarkModeOn) }
+
     LaunchedEffect(Unit) {
         textFieldFocus = true
         focusRequester.requestFocus()
     }
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(0.dp)
-        ) {
-            items(state.photos) { photo ->
-                val isLiked = isLikedMap[photo.id] ?: likedPhotos.any { it.id == photo.id }
-
-                PhotoItem(
-                    photo = photo,
-                    onItemClick = {
-                        navController.navigate(Screen.PhotoDetailScreen.route + "/${photo.id}")
-                    },
-                    isLiked = isLiked,
-                    onLikeClick = { liked ->
-                        if (liked) {
-                            viewModel.likePhoto(photo)
-                        } else {
-                            viewModel.unlikePhoto(photo)
-                        }
-                        isLikedMap[photo.id] = liked
+    Scaffold(
+        scaffoldState = scaffoldState,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
                     }
+                },
+                modifier = Modifier.padding(bottom = 16.dp, end = 16.dp),
+                backgroundColor = MaterialTheme.colors.primary
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_gear),
+                    contentDescription = "Settings",
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colors.onPrimary
                 )
             }
-        }
-
-        TopAppBar(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp, start = 8.dp, end = 8.dp),
-            backgroundColor = Color.Transparent,
-            elevation = 0.dp
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+        },
+        drawerContent = {
+            Column(
+                modifier = Modifier.padding(16.dp)
             ) {
-                TextField(
-                    value = searchQuery.value,
-                    onValueChange = { searchQuery.value = it },
-                    placeholder = { Text("Search") },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Search
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            viewModel.getSearchPhotos(query = searchQuery.value)
-                            keyboardController?.hide()
-                        }
-                    ),
-                    modifier = Modifier
-                        .weight(1f)
-                        .background(color = Color.Transparent)
-                        .focusRequester(focusRequester)
-                        .onFocusChanged {
-                            textFieldFocus = it.isFocused
-                            if (it.isFocused) {
-                                keyboardController?.show()
-                            }
-                        }
+                Text(
+                    text = "Settings",
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                IconButton(
-                    onClick = {
-                        navController.navigate(Screen.LikedPhotoListScreen.route)
-                    }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 16.dp)
                 ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_heart_filled),
-                        contentDescription = "Favorites"
+                    Text(
+                        text = "Dark Mode",
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Switch(
+                        checked = isDarkModeOn.value,
+                        onCheckedChange = { enabled ->
+                            isDarkModeOn.value = enabled
+                            viewModel.setDarkModePreference(enabled)
+                        },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colors.primary,
+                            checkedTrackColor = MaterialTheme.colors.primary.copy(alpha = 0.5f)
+                        )
                     )
                 }
             }
-        }
+        },
+        drawerBackgroundColor = MaterialTheme.colors.surface,
+        drawerContentColor = MaterialTheme.colors.onSurface,
+        drawerElevation = DrawerDefaults.Elevation,
+        drawerGesturesEnabled = isDrawerOpen,
+        content = { paddingValues ->
+            CompositionLocalProvider(
+                LocalContentColor provides MaterialTheme.colors.onPrimary
+            ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues)
+                    ) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(state.photos) { photo ->
+                                val isLiked = isLikedMap[photo.id] ?: likedPhotos.any { it.id == photo.id }
 
-        if (state.error.isNotBlank()) {
-            Text(
-                text = state.error,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+                                PhotoItem(
+                                    photo = photo,
+                                    onItemClick = {
+                                        navController.navigate(Screen.PhotoDetailScreen.route + "/${photo.id}")
+                                    },
+                                    isLiked = isLiked,
+                                    onLikeClick = { liked ->
+                                        if (liked) {
+                                            viewModel.likePhoto(photo)
+                                        } else {
+                                            viewModel.unlikePhoto(photo)
+                                        }
+                                        isLikedMap[photo.id] = liked
+                                    }
+                                )
+                            }
+                        }
 
-        if (state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        TopAppBar(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 8.dp, end = 8.dp, top = 16.dp),
+                            backgroundColor = Color.Transparent,
+                            elevation = 0.dp
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                TextField(
+                                    value = searchQuery.value,
+                                    onValueChange = { searchQuery.value = it },
+                                    placeholder = { Text("Search") },
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Search
+                                    ),
+                                    keyboardActions = KeyboardActions(
+                                        onSearch = {
+                                            viewModel.getSearchPhotos(query = searchQuery.value)
+                                            keyboardController?.hide()
+                                        }
+                                    ),
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .background(color = Color.Transparent)
+                                        .focusRequester(focusRequester)
+                                        .onFocusChanged {
+                                            textFieldFocus = it.isFocused
+                                            if (it.isFocused) {
+                                                keyboardController?.show()
+                                            }
+                                        }
+                                )
+
+                                Spacer(modifier = Modifier.width(8.dp))
+
+                                IconButton(
+                                    onClick = {
+                                        navController.navigate(Screen.LikedPhotoListScreen.route)
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.ic_heart_filled),
+                                        contentDescription = "Favorites",
+                                        tint = MaterialTheme.colors.primary
+                                    )
+                                }
+                            }
+                        }
+
+                        if (state.error.isNotBlank()) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = state.error,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+
+                        if (state.isLoading) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                    }
+            }
         }
-    }
+    )
 }
