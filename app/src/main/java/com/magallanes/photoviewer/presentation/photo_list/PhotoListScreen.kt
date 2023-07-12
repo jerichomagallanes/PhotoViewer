@@ -114,16 +114,79 @@ fun PhotoListScreen(
             CompositionLocalProvider(
                 LocalContentColor provides MaterialTheme.colors.onPrimary
             ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                ) {
+                    TopAppBar(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
+                        backgroundColor = Color.Transparent,
+                        elevation = 0.dp
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            TextField(
+                                value = searchQuery.value,
+                                onValueChange = { searchQuery.value = it },
+                                placeholder = { Text("Search") },
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Search
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onSearch = {
+                                        viewModel.getSearchPhotos(query = searchQuery.value)
+                                        keyboardController?.hide()
+                                    }
+                                ),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .background(color = Color.Transparent)
+                                    .focusRequester(focusRequester)
+                                    .onFocusChanged {
+                                        textFieldFocus = it.isFocused
+                                        if (it.isFocused) {
+                                            keyboardController?.show()
+                                        }
+                                    },
+                                colors = TextFieldDefaults.textFieldColors(
+                                    textColor = Color.Gray
+                                )
+                            )
+
+                            Spacer(modifier = Modifier.width(8.dp))
+
+                            IconButton(
+                                onClick = {
+                                    navController.navigate(Screen.LikedPhotoListScreen.route)
+                                }
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_heart_filled),
+                                    contentDescription = "Favorites",
+                                    tint = MaterialTheme.colors.primary
+                                )
+                            }
+                        }
+                    }
+
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(paddingValues)
+                            .weight(1f) // Consume remaining space
                     ) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
                             items(state.photos) { photo ->
-                                val isLiked = isLikedMap[photo.id] ?: likedPhotos.any { it.id == photo.id }
+                                val isLiked =
+                                    isLikedMap[photo.id] ?: likedPhotos.any { it.id == photo.id }
 
                                 PhotoItem(
                                     photo = photo,
@@ -143,60 +206,6 @@ fun PhotoListScreen(
                             }
                         }
 
-                        TopAppBar(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 8.dp, end = 8.dp, top = 16.dp),
-                            backgroundColor = Color.Transparent,
-                            elevation = 0.dp
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                TextField(
-                                    value = searchQuery.value,
-                                    onValueChange = { searchQuery.value = it },
-                                    placeholder = { Text("Search") },
-                                    keyboardOptions = KeyboardOptions(
-                                        keyboardType = KeyboardType.Text,
-                                        imeAction = ImeAction.Search
-                                    ),
-                                    keyboardActions = KeyboardActions(
-                                        onSearch = {
-                                            viewModel.getSearchPhotos(query = searchQuery.value)
-                                            keyboardController?.hide()
-                                        }
-                                    ),
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .background(color = Color.Transparent)
-                                        .focusRequester(focusRequester)
-                                        .onFocusChanged {
-                                            textFieldFocus = it.isFocused
-                                            if (it.isFocused) {
-                                                keyboardController?.show()
-                                            }
-                                        }
-                                )
-
-                                Spacer(modifier = Modifier.width(8.dp))
-
-                                IconButton(
-                                    onClick = {
-                                        navController.navigate(Screen.LikedPhotoListScreen.route)
-                                    }
-                                ) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.ic_heart_filled),
-                                        contentDescription = "Favorites",
-                                        tint = MaterialTheme.colors.primary
-                                    )
-                                }
-                            }
-                        }
-
                         if (state.error.isNotBlank()) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
@@ -204,7 +213,8 @@ fun PhotoListScreen(
                             ) {
                                 Text(
                                     text = state.error,
-                                    textAlign = TextAlign.Center
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colors.onSurface
                                 )
                             }
                         }
@@ -218,6 +228,7 @@ fun PhotoListScreen(
                             }
                         }
                     }
+                }
             }
         }
     )
