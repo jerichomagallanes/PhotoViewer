@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PhotoListScreen(
     navController: NavController,
+    versionName: String,
     viewModel: PhotoListViewModel = hiltViewModel(),
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
@@ -75,35 +76,48 @@ fun PhotoListScreen(
             }
         },
         drawerContent = {
-            Column(
-                modifier = Modifier.padding(16.dp)
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
             ) {
-                Text(
-                    text = "Settings",
-                    style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.TopStart)
                 ) {
                     Text(
-                        text = "Dark Mode",
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier.weight(1f)
+                        text = "Settings",
+                        style = MaterialTheme.typography.h6,
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
-                    Switch(
-                        checked = isDarkModeOn.value,
-                        onCheckedChange = { enabled ->
-                            isDarkModeOn.value = enabled
-                            viewModel.setDarkModePreference(enabled)
-                        },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = MaterialTheme.colors.primary,
-                            checkedTrackColor = MaterialTheme.colors.primary.copy(alpha = 0.5f)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    ) {
+                        Text(
+                            text = "Dark Mode",
+                            style = MaterialTheme.typography.body1,
+                            modifier = Modifier.weight(1f)
                         )
-                    )
+                        Switch(
+                            checked = isDarkModeOn.value,
+                            onCheckedChange = { enabled ->
+                                isDarkModeOn.value = enabled
+                                viewModel.setDarkModePreference(enabled)
+                            },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colors.primary,
+                                checkedTrackColor = MaterialTheme.colors.primary.copy(alpha = 0.5f)
+                            )
+                        )
+                    }
                 }
+                Text(
+                    text = "v$versionName",
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                )
             }
         },
         drawerBackgroundColor = MaterialTheme.colors.surface,

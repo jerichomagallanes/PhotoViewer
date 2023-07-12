@@ -1,5 +1,6 @@
 package com.magallanes.photoviewer.presentation.liked_photo_list
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -7,13 +8,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.magallanes.photoviewer.presentation.Screen
 import com.magallanes.photoviewer.presentation.liked_photo_list.components.LikedPhotoItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LikedPhotoListScreen(
     navController: NavController,
@@ -30,6 +34,23 @@ fun LikedPhotoListScreen(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(0.dp)
         ) {
+            stickyHeader {
+                Surface(
+                    color = MaterialTheme.colors.surface,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Liked Photos",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.h6,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(vertical = 16.dp)
+                            .fillMaxWidth()
+                    )
+                }
+            }
 
             items(likedPhotos) { photo ->
                 val isLiked = isLikedMap[photo.id] ?: likedPhotos.any { it.id == photo.id }
