@@ -6,7 +6,7 @@ App Demo
 
 ![Demo 1](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/a213cabf-d563-4263-a9a4-65deb9eea267)
 
-![Demo 2](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/ad3b373b-f0b7-438d-bf7b-de910b5506fd)
+![Demo 2](https://github.com/jerichomagallanes/PhotoViewer/assets/56428317/5e4f290f-995e-418e-b339-20830647eec7)
 
 ## 📋 Features
 
